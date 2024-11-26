@@ -40,7 +40,7 @@ public final class LambdaUtilities {
      */
     public static <T> List<T> dup(final List<T> list, final UnaryOperator<T> op) {
         final List<T> l = new ArrayList<>(list.size() * 2);
-        list.forEach(t -> {
+        list.forEach(t  ->  {
             l.add(t);
             l.add(op.apply(t));
         });
@@ -62,10 +62,10 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Optional.filter
          */
-        List<Optional<T>> opt = new ArrayList<>();
-        list.forEach(t->{
-            Optional<T> k;
-            k=Optional.of(t);
+        final List<Optional<T>> opt = new ArrayList<>();
+        list.forEach(t  ->  {
+            final Optional<T> k;
+            k = Optional.of(t);
             opt.add(k.filter(pre));
         });
         return opt;
@@ -87,10 +87,10 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
-        Map<R, Set<T>> kMap = new HashMap<>();
-        list.forEach(t->{ 
-            R result = op.apply(t);
-            HashSet<T> q = new HashSet<>();
+        final Map<R, Set<T>> kMap = new HashMap<>();
+        list.forEach(t -> { 
+            final R result = op.apply(t);
+            final Set<T> q = new HashSet<>();
             q.add(t);
             /*kMap.merge(result, q, new BiFunction<Set<T>,Set<T>,Set<T>>() {
                 @Override
@@ -99,13 +99,11 @@ public final class LambdaUtilities {
                     return arg0;
                 }
             });*/
-            kMap.merge(result, q, (k,v) ->{
+            kMap.merge(result, q, (k, v)  -> {
                 kMap.get(result).add(t);
                 return kMap.get(result);
             });
-            
         });
-        
        return kMap;
     }
 
@@ -127,9 +125,9 @@ public final class LambdaUtilities {
          *
          * Keep in mind that a map can be iterated through its forEach method
          */
-        Map<K, V> result = new HashMap<>();
-        map.forEach((k,v) ->{
-            result.put(k,v.orElse(def.get()));
+        final Map<K, V> result = new HashMap<>();
+        map.forEach((k, v)  -> {
+            result.put(k, v.orElse(def.get()));
         });
         return result;
     }
@@ -141,15 +139,15 @@ public final class LambdaUtilities {
     @SuppressWarnings("PMD.SystemPrintln")
     public static void main(final String[] args) {
         final List<Integer> li = IntStream.range(1, 8).mapToObj(Integer::valueOf).collect(Collectors.toList());
-        System.out.println(dup(li, x -> x + 100));
+        System.out.println(dup(li, x  ->  x + 100));
         /*
          * [1, 101, 2, 102, 3, 103, 4, 104, 5, 105, 6, 106, 7, 107]
          */
-        System.out.println(group(li, x -> x % 2 == 0 ? "even" : "odd"));
+        System.out.println(group(li, x  ->  x % 2 == 0 ? "even" : "odd"));
         /*
          * {odd=[1, 3, 5, 7], even=[2, 4, 6]}
          */
-        final List<Optional<Integer>> opt = optFilter(li, x -> x % 3 == 0);
+        final List<Optional<Integer>> opt = optFilter(li, x  ->  x % 3 == 0);
         System.out.println(opt);
         /*
          * [Optional.empty, Optional.empty, Optional[3], Optional.empty,
@@ -159,7 +157,7 @@ public final class LambdaUtilities {
         for (int i = 0; i < opt.size(); i++) {
             map.put(i, opt.get(i));
         }
-        System.out.println(fill(map, () -> (int) (-Math.random() * 10)));
+        System.out.println(fill(map, ()  ->  (int) (-Math.random() * 10)));
         /*
          * {0=-2, 1=-7, 2=3, 3=-3, 4=-7, 5=6, 6=-3}
          */
