@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -94,15 +92,16 @@ public final class LambdaUtilities {
             R result = op.apply(t);
             HashSet<T> q = new HashSet<>();
             q.add(t);
-            kMap.merge(result, q, new BiFunction<Set<T>,Set<T>,Set<T>>() {
+            /*kMap.merge(result, q, new BiFunction<Set<T>,Set<T>,Set<T>>() {
                 @Override
                 public Set<T> apply(Set<T> arg0, Set<T> arg1) {
                     kMap.get(result).add(t);
                     return arg0;
                 }
-
-                
-                
+            });*/
+            kMap.merge(result, q, (k,v) ->{
+                kMap.get(result).add(t);
+                return kMap.get(result);
             });
             
         });
