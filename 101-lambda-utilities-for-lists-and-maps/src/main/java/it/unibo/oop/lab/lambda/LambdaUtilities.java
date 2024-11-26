@@ -1,5 +1,6 @@
 package it.unibo.oop.lab.lambda;
 
+import java.lang.foreign.Linker.Option;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,13 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Optional.filter
          */
-        return null;
+        List<Optional<T>> opt = new ArrayList<>();
+        list.forEach(t->{
+            Optional<T> k= null;
+            k.of(t);
+            opt.add(k.filter(pre));
+        });
+        return opt;
     }
 
     /**
