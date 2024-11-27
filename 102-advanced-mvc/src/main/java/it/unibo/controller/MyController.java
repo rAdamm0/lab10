@@ -1,20 +1,20 @@
 package it.unibo.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Controller {
-
-    public static final String readLine(String input, int n){
+public class MyController {
+    
+    public final Map<String, Integer> readAllLines(String input){
+        final Map<String,Integer> result = new HashMap<>();
         try (BufferedReader toRead = new BufferedReader(new FileReader(input))) {
-            String result;
-            int i = 0;
-            do{
-                result = toRead.readLine();
-                i++;
-            }while(i<n);
+            String temp;
+            while((temp = toRead.readLine())!=null){
+                result.put(temp.split(":")[0],Integer.parseInt(temp.split(":")[1]));
+            }
             return result;
         } catch (IOException e) {
             e.getStackTrace();
@@ -22,12 +22,5 @@ public class Controller {
         }
     }
 
-    public static final String readLine(File input, int n){
-        return readLine(input.getAbsolutePath(), n);
-    }
-
-    public static final int getAfterColumn(String input){
-        return Integer.parseInt(input.split(":")[1]);
-    }
 
 }

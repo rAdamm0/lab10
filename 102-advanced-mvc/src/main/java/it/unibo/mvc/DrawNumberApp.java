@@ -7,18 +7,20 @@ import java.util.List;
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
-    private static final int MIN = 0;
-    private static final int MAX = 100;
-    private static final int ATTEMPTS = 10;
+    //private static final int MIN = 0;
+    //private static final int MAX = 100;
+    //private static final int ATTEMPTS = 10;
 
     private final DrawNumber model;
     private final List<DrawNumberView> views;
+
 
     /**
      * @param views
      *            the views to attach
      */
     public DrawNumberApp(final DrawNumberView... views) {
+        final int min = 0, max = 0, attemps = 0;
         /*
          * Side-effect proof
          */
@@ -27,7 +29,9 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-        this.model = new DrawNumberImpl(MIN, MAX, ATTEMPTS);
+
+
+        this.model = new DrawNumberImpl(min, max, attemps);
     }
 
     @Override
