@@ -81,7 +81,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
         new DrawNumberApp(new DrawNumberViewImpl());
         new DrawNumberApp(new DrawNumberViewImpl());
         new PrintStreamView("console.log");
-
+        new PrintStreamView(System.out);
     }
 
 }
