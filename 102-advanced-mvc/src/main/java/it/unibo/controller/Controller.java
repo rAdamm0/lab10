@@ -6,12 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Controller {
-    int stringNum = 0;
-
-    public final void setLine(int n){
-        this.stringNum=n;
-    }
-
+    
     public final String readLine(String input, int n){
         try (BufferedReader toRead = new BufferedReader(new FileReader(input))) {
             String result;
@@ -26,7 +21,6 @@ public class Controller {
             return null;
         }
     }
-
 
     public final String readLine(File input, int n){
         return readLine(input.getAbsolutePath(), n);
