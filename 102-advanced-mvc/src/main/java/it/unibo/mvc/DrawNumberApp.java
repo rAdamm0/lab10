@@ -38,8 +38,6 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-
-
         this.model = new DrawNumberImpl(configs.get("minimum"), configs.get("maximum"), configs.get("attempts"));
     }
 
