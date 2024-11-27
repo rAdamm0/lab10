@@ -38,6 +38,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
+
         this.model = new DrawNumberImpl(configs.get("minimum"), configs.get("maximum"), configs.get("attempts"));
     }
 
@@ -77,6 +78,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @throws FileNotFoundException 
      */
     public static void main(final String... args) throws FileNotFoundException {
+        new DrawNumberApp(new DrawNumberViewImpl());
         new DrawNumberApp(new DrawNumberViewImpl());
     }
 
