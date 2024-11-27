@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
     int stringNum = 0;
@@ -29,8 +31,11 @@ public class Controller {
 
 
     public final String readLine(File input, int n){
+        return readLine(input.getAbsolutePath(), n);
+    }
 
-        return null;
+    public final int getAfterColumn(String input){
+        return Integer.parseInt(input.split(":")[1]);
     }
 
 }
