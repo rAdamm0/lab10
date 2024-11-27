@@ -1,8 +1,12 @@
 package it.unibo.mvc;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import it.unibo.controller.MyController;
 
 /**
  */
@@ -20,7 +24,12 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      *            the views to attach
      */
     public DrawNumberApp(final DrawNumberView... views) {
-        final int min = 0, max = 0, attemps = 0;
+        final MyController control = new MyController();
+        final Map<String, Integer> configs = control.readAllLines(new File("src"+System.getProperty("file.separator")+
+                                                                            "main"+System.getProperty("file.separator")+
+                                                                            "resources"+System.getProperty("file.separator")+
+                                                                            "config.yml"));
+        
         /*
          * Side-effect proof
          */
@@ -31,7 +40,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
         }
 
 
-        this.model = new DrawNumberImpl(min, max, attemps);
+        this.model = new DrawNumberImpl(configs.get("minimum"), configs.get("maximum"), configs.get("attempts"));
     }
 
     @Override
