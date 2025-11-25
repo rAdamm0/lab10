@@ -1,11 +1,6 @@
 package it.unibo.oop.lab.lambda;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -87,7 +82,11 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
-        return emptyMap();
+        return list.stream()
+                .collect(Collectors.groupingBy(
+                        op,
+                        Collectors.toSet()
+                ));
     }
 
     /**
@@ -108,7 +107,11 @@ public final class LambdaUtilities {
          *
          * Keep in mind that a map can be iterated through its forEach method
          */
-        return emptyMap();
+        Map<K,V> temp = new HashMap<>();
+        map.forEach((a,b)->{
+            temp.put(a,b.orElse(def.get()));
+        });
+        return temp;
     }
 
     /**
