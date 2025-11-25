@@ -1,0 +1,9 @@
+# gradle
+build
+.gradle
+
+#
+bin
+
+#idea
+.idea
