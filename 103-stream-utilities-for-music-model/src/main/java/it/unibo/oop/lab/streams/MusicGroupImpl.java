@@ -1,11 +1,7 @@
 package it.unibo.oop.lab.streams;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -31,42 +27,42 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Stream<String> orderedSongNames() {
-        return null;
+        return songs.stream().map(Song::getSongName).sorted();
     }
 
     @Override
     public Stream<String> albumNames() {
-        return null;
+        return albums.keySet().stream() ;
     }
 
     @Override
     public Stream<String> albumInYear(final int year) {
-        return null;
+        return albums.keySet().stream().filter(x->albums.get(x)==year);
     }
 
     @Override
     public int countSongs(final String albumName) {
-        return -1;
+        return songs.stream().map(Song::getAlbumName).filter(x->x.orElse("").equals(albumName)).toList().size();
     }
 
     @Override
     public int countSongsInNoAlbum() {
-        return -1;
+        return songs.stream().map(Song::getAlbumName).filter(Optional::isEmpty).toList().size();
     }
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        return OptionalDouble.empty();
+        return OptionalDouble.of(songs.stream().filter(x->x.getAlbumName().orElse("").equals(albumName)).map(Song::getDuration).reduce((a,b)->(a+b)/2).orElseThrow());
     }
 
     @Override
     public Optional<String> longestSong() {
-        return Optional.empty();
+        return songs.stream().sorted((a,b)->Double.compare(a.getDuration(),b.getDuration())*-1).limit(1).map(Song::getSongName).findFirst();
     }
 
     @Override
     public Optional<String> longestAlbum() {
-        return Optional.empty();
+        return songs.stream().collect(Collectors.groupingBy(Song::getAlbumName, Collectors.summingDouble(Song::getDuration))).entrySet().stream().max(Map.Entry.comparingByValue()).orElseThrow().getKey();
     }
 
     private static final class Song {
